@@ -852,7 +852,7 @@ class AGraph(object):
         """Return copy of directed graph with edge directions reversed."""
         if self.directed:
             # new empty DiGraph
-            H=self.__class__(strict=self.strict,directed=True,name=self.name)
+            H=AGraph(strict=self.strict,directed=True,name=self.name)
             H.graph_attr.update(self.graph_attr)
             H.node_attr.update(self.node_attr)
             H.edge_attr.update(self.edge_attr)
@@ -927,7 +927,7 @@ class AGraph(object):
         self.write( fhandle )
         fh.seek( 0 )
 
-        return self.__class__( filename=fhandle )
+        return AGraph( filename=fhandle )
 
 
     def add_path(self, nlist):
@@ -967,7 +967,7 @@ class AGraph(object):
         except TypeError:
             raise TypeError("Subgraph name must be a string: %s"%name.decode(self.encoding))
 
-        H=self.__class__(strict=self.strict,
+        H=AGraph(strict=self.strict,
                          directed=self.directed,
                          handle=handle,name=name,
                          **attr)
@@ -1003,7 +1003,7 @@ class AGraph(object):
         handle=gv.agparent(self.handle)
         if handle is None:
             return None
-        H=self.__class__(strict=self.strict,
+        H=AGraph(strict=self.strict,
                          directed=self.directed,
                          handle=handle,
                          name=name)
@@ -1015,7 +1015,7 @@ class AGraph(object):
         handle=gv.agroot(self.handle)
         if handle is None:
             return None
-        H=self.__class__(strict=self.strict,
+        H=AGraph(strict=self.strict,
                          directed=self.directed,
                          handle=handle,name=name)
         return H
@@ -1032,7 +1032,7 @@ class AGraph(object):
 
         if handle is None:
             return None
-        H=self.__class__(strict=self.strict,
+        H=AGraph(strict=self.strict,
                          directed=self.directed,
                          handle=handle)
         return H
@@ -1041,7 +1041,7 @@ class AGraph(object):
         """Iterator over subgraphs."""
         handle=gv.agfstsubg(self.handle)
         while handle is not None:
-            yield self.__class__(strict=self.strict,
+            yield AGraph(strict=self.strict,
                                  directed=self.directed,
                                  handle=handle)
             handle=gv.agnxtsubg(handle)
@@ -1320,7 +1320,7 @@ class AGraph(object):
         """
         data=self._run_prog('tred',args)
         if copy:
-            return self.__class__(string=data)
+            return AGraph(string=data)
         else:
             return self.from_string(data)
 
@@ -1338,7 +1338,7 @@ class AGraph(object):
         """
         data=self._run_prog('acyclic',args)
         if copy:
-            return self.__class__(string=data)
+            return AGraph(string=data)
         else:
             return self.from_string(data)
 
